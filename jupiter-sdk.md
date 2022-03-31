@@ -26,6 +26,22 @@ Instruction order for ARB using Jupiter
 Find out how to cancel this arb transaction if not profitable? Does adding minOutAmount in Swap2 works? 
 
 
+Analyzing transaction - https://solscan.io/tx/zCyWpDyDFBZgGWquYU6jXXk4iB1PKD5AG2usxPaPAjkayhVwi5HSLZZXPVNZ4PeqjVLzJwBsR4w3NnWoaTqyiTY
+Transaction path USDC -> SOL -> USDC
+- SetTokenLedger instruction (https://github.com/jup-ag/instruction-parser/blob/main/src/idl/jupiter.ts#L2827)
+  - TokenLedger - 7h51TX1pNvSaNyjg4koKroJqoe7atKB7xWUfir7ZqX81
+  - TokenAccount - B54zTJjC8jNiwgcYJVCt26xzGtPm87BBKNgyH3xNCD5V
+- RaydiumSwapV2 instruction (https://github.com/jup-ag/instruction-parser/blob/main/src/idl/jupiter.ts#L2325)
+  - Provide all accounts required for this instruction
+  - inAmount -> 11161469311
+  - minOutAmount and platformFeeBps is 0
+- SerumSwap (https://github.com/jup-ag/instruction-parser/blob/main/src/idl/jupiter.ts#L1864)
+  -  Market and other accounts required for serum swap
+  -  side -> "Ask" (This can be filled by looking at what from and to currencies are and what is the market)
+  -  inAmount -> null (TODO: Check if inAmount null is a valid transaction instruction? if valid how does program know how much to input for swap?)
+  -  minimumOutAmount -> 11161469311
+  -  platformFeeBps -> 0
+
 Exported functions for instruction creation
 ```
 export declare const JUPITER_PROGRAM_ID_STAGING: PublicKey;
