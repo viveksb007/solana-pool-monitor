@@ -15,3 +15,7 @@ Build
 Run
 
 `go run solana-pool-monitor`
+
+Price and other details should be logged in terminal
+
+![Screenshot 2022-06-02 at 11 29 02 PM](https://user-images.githubusercontent.com/12713808/171701744-9134d310-4ddf-47b5-9efc-6b36cabb4940.png)
