@@ -3,12 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
+	"math"
+	"sync"
+
 	bin "github.com/gagliardetto/binary"
 	"github.com/gagliardetto/solana-go"
 	"github.com/gagliardetto/solana-go/programs/serum"
 	"github.com/gagliardetto/solana-go/rpc"
-	"math"
-	"sync"
 
 	"github.com/gagliardetto/solana-go/programs/token"
 	"github.com/gagliardetto/solana-go/rpc/ws"
@@ -16,18 +17,25 @@ import (
 
 func main() {
 
-	rpcClient := rpc.New("https://ssc-dao.genesysgo.net")
+	/*
+		--- This code block will find price by looking at pool and order book supporting Raydium Swap
 
-	printRaydiumPoolReserve("58oQChx4yWmvKdwLLZzBi4ChoCc2fqCUWBkwMihLYQo2", rpcClient)
+		rpcClient := rpc.New("https://ssc-dao.genesysgo.net")
+		printRaydiumPoolReserve("58oQChx4yWmvKdwLLZzBi4ChoCc2fqCUWBkwMihLYQo2", rpcClient)
+	*/
 
-	//client, err := ws.Connect(context.Background(), "wss://ssc-dao.genesysgo.net")
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//go monitorPool("ANP74VNsHwSrq9uUSjiSNyNWvf6ZPrKTmE4gHoNd13Lg", "75HgnSvXbWKZBpZHveX68ZzAhDqMzNDS29X6BGLtxMo1", client)
-	//go monitorPool("DQyrAcCrDXQ7NeoqGgDCZwBvWDcYmFCjSb9JtteuvPpz", "HLmqeL62xR1QoZ1HKKbXRrdN1p3phKpxRMb2VVopvBBz", client)
-	//select {}
+	// Creating web socket client
+	client, err := ws.Connect(context.Background(), "wss://ssc-dao.genesysgo.net")
+	if err != nil {
+		panic(err)
+	}
+
+	// Below are addresses from Orca SOL-USDC pool
+	go monitorPool("ANP74VNsHwSrq9uUSjiSNyNWvf6ZPrKTmE4gHoNd13Lg", "75HgnSvXbWKZBpZHveX68ZzAhDqMzNDS29X6BGLtxMo1", client)
+
+	// Below are addresses from Pool that supports swap in Raydium SOL-USDC
+	// go monitorPool("DQyrAcCrDXQ7NeoqGgDCZwBvWDcYmFCjSb9JtteuvPpz", "HLmqeL62xR1QoZ1HKKbXRrdN1p3phKpxRMb2VVopvBBz", client)
+	select {}
 }
 
 // TODO - write monitor Raydium Pool method
