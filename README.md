@@ -1,5 +1,7 @@
 # solana-pool-monitor
 
+related blog post - https://viveksb007.github.io/2022/06/amm-reserve-monitoring
+
 This repo is POC to test account monitoring of Solana blockchain. I tried to listen to pair of addresses of Orca SOL-USDC AMM pool and find updated prices after each trade is done against the pool.
 
 For simple AMM, there is subscription based monitoring.
